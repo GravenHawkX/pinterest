@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/feed.css">
+  <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
+  <title>Artspire | Feed</title>
+</head>
+
+<body>
+  <nav>
+    <div class="logo">
+      <img src="/images/logo_black.png" alt="">
+    </div>
+    <ul class="navLink">
+      <li><a href="/feed">Feed</a></li>
+      <li><a href="/profile">Profile</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+    <div class="lines">
+      <div class="l1"></div>
+      <div class="l2"></div>
+      <div class="l3"></div>
+    </div>
+  </nav>
+
+  <div class="container-profile">
+    <div class="card">
+      <h1 style="text-align: center;">Daily Feed</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <script>
+      // Function to shuffle array using Fisher-Yates algorithm
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      // Create a shuffled array of posts
+      const shuffledPosts = [];
+      <% users.forEach(user => { %>
+        <% user.posts.forEach(function(post){ %>
+          shuffledPosts.push({
+            image: "/images/uploads/<%= post.image %>",
+            caption: "<%= post.imageText %>"
+          });
+        <% }) %>
+      <% }); %>
+
+      // Shuffle the array
+      shuffle(shuffledPosts);
+
+      // Display the shuffled posts
+      shuffledPosts.forEach(post => {
+        document.write(`
+          <div class="box">
+            <img src="${post.image}" class="card-img-top" alt="...">
+            <h5 class="caption">${post.caption}</h5>
+          </div>
+        `);
+      });
+    </script>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="app.js"></script>
+  <script>
+    const navSlide = () => {
+      const lines = document.querySelector('.lines');
+      const nav = document.querySelector('.navLink');
+
+      lines.addEventListener('click', () => {
+        nav.classList.toggle('nav-active');
+
+        //Line Animation
+        lines.classList.toggle('toggle');
+      });
+
+    }
+
+    navSlide();
+  </script>
+</body>
+
+</html>

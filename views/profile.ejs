@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artspire | Profile</title>
+  <link rel="stylesheet" href="/stylesheets/feed.css">
+  <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+  <nav>
+    <div class="logo">
+      <img src="/images/logo_black.png" alt="">
+    </div>
+    <ul class="navLink">
+      <li><a href="/feed">Feed</a></li>
+      <li><a href="/profile">Profile</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+    <div class="lines">
+      <div class="l1"></div>
+      <div class="l2"></div>
+      <div class="l3"></div>
+    </div>
+  </nav>
+
+  <div class="container-profile">
+    <div class="carder">
+      <div class="profile-picture">
+        <img src="/images/avatar.jpg" alt="Profile Picture">
+      </div>
+      <h2 class="name"><%= user.fullname %></h2>
+      <h3 class="username">@<%= user.username %></h3>
+      <p class="tagline">"Brushing life onto canvas, one stroke at a time. 🎨✨ #ArtistryUnleashed"</p>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="text" name="filecaption" placeholder="Some caption" class="custom-caption-input">
+        <label for="photo-upload" class="custom-upload-label">Choose File</label>
+        <input type="file" id="photo-upload" name="file">
+        <button type="submit">Upload</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="container">
+    <script>
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      const shuffledPosts = [];
+      <% user.posts.forEach(function(post){ %>
+        shuffledPosts.push({
+          image: "/images/uploads/<%= post.image %>",
+          caption: "<%= post.imageText %>"
+        });
+      <% }) %>
+
+      shuffle(shuffledPosts);
+
+      shuffledPosts.forEach(post => {
+        document.write(`
+          <div class="box" style="width: 18rem; height: fit-content;">
+            <img src="${post.image}" class="card-img-top" alt="...">
+            <h5 class="caption">${post.caption}</h5>
+          </div>
+        `);
+      });
+    </script>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="app.js"></script>
+  <script>
+    const navSlide = () => {
+      const lines = document.querySelector('.lines');
+      const nav = document.querySelector('.navLink');
+      
+      lines.addEventListener('click',() => {
+        nav.classList.toggle('nav-active');
+        lines.classList.toggle('toggle');
+      });
+    }
+    
+    navSlide();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

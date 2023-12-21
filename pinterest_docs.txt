@@ -1,0 +1,43 @@
+Steps for the : 
+1. / Route par login and signup 
+2. /profile See your profile and saved posts. Upload section
+3. /feed for feed and images
+4. /click on the image to open and save
+5. /board/:boardname shows the board
+
+
+Excess code in index.js
+
+
+
+
+router.get('/alluserposts', async function(req, res, next) {
+  let user = await userModel
+  .findOne({_id: "6581e24c6869ce401bee0f57"})
+  .populate('posts')
+  res.send(user);
+});
+
+
+router.get('/createuser', async function(req, res, next) {
+  let createduser = await userModel.create({
+    username: "Aaron",
+    password: "Aaron",
+    posts: [],
+    email: "aaron@male.com",
+    fullName: "Aaron Augustine",
+  });
+
+  res.send(createduser);
+});
+
+router.get('/createpost', async function(req, res, next) {
+  let createdpost = await postModel.create({
+    postText: "New post",
+    user:"6581e24c6869ce401bee0f57"
+  });
+  let user = await userModel.findOne({_id: "6581e24c6869ce401bee0f57"});
+  user.posts.push(createdpost._id);
+  await user.save();
+  res.send("done");
+});

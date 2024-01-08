@@ -1,7 +1,7 @@
 {
   "name": "pinterest",
   "version": "0.0.0",
-  "homepage": "http://GravenHawkX.github.io/pinterest",
+  "homepage": "http://gravenhawkx.github.io/pinterest/",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
